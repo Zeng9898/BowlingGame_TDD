@@ -1,6 +1,7 @@
 package tw.zeng.bowlinggame;
 
 public class Frame {
+
     private int frameScore;
     private String scoreType;
     private int pins = 10;
@@ -17,7 +18,38 @@ public class Frame {
         }
     }
 
+    public void refreshFrameScore() {
+        frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
+    }
+
+    public void refreshPins(int pins) {
+        this.pins -= pins;
+    }
+
+    public void refreshScoreType() {
+        if (firstRoll.getRollScore() == 10) {
+            scoreType = "strike";
+        } else if (frameScore == 10) {
+            scoreType = "spare";
+        } else {
+            scoreType = "normal";
+        }
+    }
+
+    public void updateBonus() {
+
+    }
+
     public String getScoreType() {
         return scoreType;
     }
+
+    public int getFrameScore() {
+        return frameScore;
+    }
+
+    public int getPins() {
+        return pins;
+    }
+
 }
