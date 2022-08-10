@@ -4,6 +4,7 @@ public class BowlingGame {
     private Frame[] frames;
     private int whichFrame;
     private String whichRoll;
+    private boolean isGameOver = false;
     public static final int FRAME_SIZE = 10;
 
 
@@ -28,30 +29,41 @@ public class BowlingGame {
         frames[9] = new TenthFrame();
     }
 
-    public void refreshGame() {
-        if (whichRoll == "first") {
-            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
-                whichRoll = "second";
-            } else if (frames[whichFrame - 1].getScoreType().equals("strike")) {
-                whichFrame++;
-            }
+    public void updateGame() {
+        if (whichFrame < 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+            whichRoll = "second";
+        } else if (whichFrame < 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichFrame++;
         } else if (whichFrame < 10 && whichRoll == "second") {
             whichFrame++;
             whichRoll = "first";
+        } else if (whichFrame == 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+            whichRoll = "second";
+        } else if (whichFrame == 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = "second";
+            frames[whichFrame - 1].setPins(10);
+        } else if (whichFrame == 10 && whichRoll == "second" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+            isGameOver = true;
         }
+
+//        if (whichFrame < 10 && whichRoll == "first") {
+//            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
+//                whichRoll = "second";
+//            } else if (frames[whichFrame - 1].getScoreType().equals("strike")) {
+//                whichFrame++;
+//            }
+//        } else if (whichFrame < 10 && whichRoll == "second") {
+//            whichFrame++;
+//            whichRoll = "first";
+//        } else if (whichFrame == 10 && whichRoll == "first") {
+//            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
+//                whichRoll = "second";
+//            }
+//        }
     }
 
     public boolean isGameOver() {
-        if (whichFrame < FRAME_SIZE) {
-            return false;
-        } else {
-            //String lastFrameType = frames[FRAME_SIZE-1].getScoreType();
-            if ("end".equals(whichRoll)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        return isGameOver;
     }
 
     public int getWhichFrame() {

@@ -31,7 +31,7 @@ public class Frame {
     public void updateScoreType() {
         if (firstRoll.getRollScore() == 10) {
             scoreType = "strike";
-        } else if (frameScore == 10) {
+        } else if (firstRoll.getRollScore() + secondRoll.getRollScore() == 10) {
             scoreType = "spare";
         } else {
             scoreType = "normal";

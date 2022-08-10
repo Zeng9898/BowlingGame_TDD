@@ -95,12 +95,12 @@ class FrameTest {
     }
 
     @Test
-    void givenAFrameWithLessThan10ScoreInTwoRolls_whenCallUpdateScoreType_thenTheScoreTypeShouldbeSpare() {
+    void givenAFrameWithLessThan10ScoreInTwoRolls_whenCallUpdateScoreType_thenTheScoreTypeShouldbeNormal() {
         //given
         Frame frame = new Frame();
         frame.getRoll("first").setRollScore(0);
 
-        for (int k = 1; k <= 9; k++) {
+        for (int k = 0; k <= 9; k++) {
             frame.getRoll("second").setRollScore(k);
             frame.updateFrameScore();
             //when

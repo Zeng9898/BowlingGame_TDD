@@ -8,7 +8,7 @@ class TenthFrameTest {
     @Test
     void givenTenthFrame_whenCallGetRoll_thenShouldReturnTheRightRoll() {
         //given
-        var frame = new TenthFrame();
+        Frame frame = new TenthFrame();
         //when
         Roll firstRoll = frame.getRoll("first");
         Roll secondRoll = frame.getRoll("second");
@@ -24,13 +24,12 @@ class TenthFrameTest {
         var frame = new TenthFrame();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            Roll firstRoll = frame.getRoll("whatever");
+            Roll firstRoll = frame.getRoll("wrongArgument");
         });
     }
 
     @Test
     void givenATenthFrameNormal_whenCallUpdateFrameScoreWithUpdatePins_thenShouldDoTheRightUpdate() {
-
         var frame = new TenthFrame();
         for (int pins1 = 0; pins1 < 10; pins1++) {
             for (int pins2 = 0; pins2 <= 10 - pins1 - 1; pins2++) {
