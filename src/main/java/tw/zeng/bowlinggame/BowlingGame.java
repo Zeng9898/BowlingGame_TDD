@@ -22,8 +22,24 @@ public class BowlingGame {
         whichFrame = 1;
         whichRoll = "first";
         frames = new Frame[FRAME_SIZE];
+        for (int i = 0; i < 9; i++) {
+            frames[i] = new Frame();
+        }
+        frames[9] = new TenthFrame();
     }
 
+    public void refreshGame() {
+        if (whichRoll == "first") {
+            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
+                whichRoll = "second";
+            } else if (frames[whichFrame - 1].getScoreType().equals("strike")) {
+                whichFrame++;
+            }
+        } else if (whichFrame < 10 && whichRoll == "second") {
+            whichFrame++;
+            whichRoll = "first";
+        }
+    }
 
     public boolean isGameOver() {
         if (whichFrame < FRAME_SIZE) {

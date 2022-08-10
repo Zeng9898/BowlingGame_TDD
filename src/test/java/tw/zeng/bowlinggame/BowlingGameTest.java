@@ -6,63 +6,70 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingGameTest {
     @Test
-    void givenABowlingGameWithAllStrike_whenCallApplyBonus_thenShouldDoTheRightUpdate() {
+    void givenFrame1to10FirstRollNotStrike_whenCallRefreshGame_thenShouldDoTheRightUpdate() {
+        //given
         BowlingGame bowlingGame = new BowlingGame();
         bowlingGame.start();
-        Frame[] frames = bowlingGame.getFrames();
-        for (int i = 0; i <= 9; i++) {
-            frames[i].getRoll("first").setRollScore(10);
-            frames[i].refreshPins(10);
-            frames[i].refreshFrameScore();
+        final int notStrikeNum = 5;
+        for (int frame = 0; frame < 10; frame++) {
+            bowlingGame.setWhichFrame(frame + 1);
+            bowlingGame.setWhichRoll("first");
+            bowlingGame.getFrames()[frame].getRoll("first").setRollScore(notStrikeNum);
+            bowlingGame.getFrames()[frame].updateFrameScore();
+            bowlingGame.getFrames()[frame].updatePins(notStrikeNum);
+            bowlingGame.getFrames()[frame].updateScoreType();
+            //when
+            bowlingGame.refreshGame();
+            //then
+            assertEquals("second", bowlingGame.getWhichRoll());
+
+            assertEquals(frame + 1, bowlingGame.getWhichFrame());
+
+        }
+    }
+
+    @Test
+    void givenFrame1to10FirstRollStrike_whenCallRefreshGame_thenShouldDoTheRightUpdate() {
+        //given
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        final int strike = 10;
+        for (int frame = 0; frame < 10; frame++) {
+            bowlingGame.setWhichFrame(frame + 1);
+            bowlingGame.setWhichRoll("first");
+            bowlingGame.getFrames()[frame].getRoll("first").setRollScore(strike);
+            bowlingGame.getFrames()[frame].updateFrameScore();
+            bowlingGame.getFrames()[frame].updatePins(strike);
+            bowlingGame.getFrames()[frame].updateScoreType();
+            //when
+            bowlingGame.refreshGame();
+            //then
+            assertEquals("first", bowlingGame.getWhichRoll());
+
+            assertEquals(frame + 2, bowlingGame.getWhichFrame());
+
         }
     }
 //    @Test
-//    void givenBowlingGameInFrame1to10InFirstRollWithNoStrike_whenCallRefreshGame_shouldBeSecondRoll() {
+//    void givenFrame1to9AfterSecondRoll_whenCallRefreshGame_thenShouldDoTheRightUpdate(){
 //        //given
 //        BowlingGame bowlingGame = new BowlingGame();
 //        bowlingGame.start();
-//        for (int i = 1; i < 10; i++) {
-//            bowlingGame.setWhichFrame(i);
+//        final int notStrikeNum = 5;
+//        for (int frame = 0; frame < 9; frame++) {
+//            bowlingGame.setWhichFrame(frame + 1);
 //            bowlingGame.setWhichRoll("first");
-//
+//            bowlingGame.getFrames()[frame].getRoll("first").setRollScore(notStrikeNum);
+//            bowlingGame.getFrames()[frame].updateFrameScore();
+//            bowlingGame.getFrames()[frame].updatePins(notStrikeNum);
+//            bowlingGame.getFrames()[frame].updateScoreType();
+//            //when
 //            bowlingGame.refreshGame();
-//            assertEquals("second", bowlingGame.getWhichRoll());
-//        }
-//    }
-//
-//    @Test
-//    void givenBowlingGameInFrame1to9InSecondRoll_whenCallRefreshGame_shouldBeNextFrameAndFirstRoll() {
-//        BowlingGame bowlingGame = new BowlingGame();
-//        bowlingGame.start();
-//        for (int frame = 1; frame < 9; frame++) {
-//            bowlingGame.setWhichFrame(frame);
-//            bowlingGame.setWhichRoll("second");
-//            bowlingGame.refreshGame();
-//            assertEquals(i + 1, bowlingGame.getWhichFrame());
+//            //then
 //            assertEquals("first", bowlingGame.getWhichRoll());
+//
+//            assertEquals(frame + 2, bowlingGame.getWhichFrame());
+//
 //        }
-//    }
-
-//    @Test
-//    void givenBowlingGameInFrame10AndIn_whenCallIsGameOver_shouldReturnFalse() {
-//        //given
-//        var bowlingGame = new BowlingGame();
-//        bowlingGame.start();
-//        for(int i = 1; i <= 9; i++){
-//            bowlingGame.setWhichFrame(i);
-//            assertEquals(false, bowlingGame.isGameOver());
-//        }
-//    }
-//    @Test
-//    void givenBowlingGameWithLastRoll_whenCallIsGameover_shouldReturnFalseWhenGameIsProceeding() {
-//        //given
-//        var bowlingGame = new BowlingGame();
-//        bowlingGame.start();
-//        Frame frames = bowlingGame.getFrames();
-//        frames[8].
-//        //when
-//        boolean gameOver = bowlingGame.isGameOver();
-//        //then
-//        assertEquals(false, gameOver);
 //    }
 }

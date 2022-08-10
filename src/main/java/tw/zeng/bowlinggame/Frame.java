@@ -1,12 +1,14 @@
 package tw.zeng.bowlinggame;
 
+import javax.lang.model.type.NullType;
+
 public class Frame {
 
-    private int frameScore;
-    private String scoreType;
-    private int pins = 10;
-    private Roll firstRoll = new Roll("first");
-    private Roll secondRoll = new Roll("second");
+    protected int frameScore;
+    protected String scoreType = null;
+    protected int pins = 10;
+    protected Roll firstRoll = new Roll("first");
+    protected Roll secondRoll = new Roll("second");
 
     public Roll getRoll(String whichRoll) {
         if (whichRoll.equals("first")) {
@@ -18,15 +20,15 @@ public class Frame {
         }
     }
 
-    public void refreshFrameScore() {
+    public void updateFrameScore() {
         frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
     }
 
-    public void refreshPins(int pins) {
+    public void updatePins(int pins) {
         this.pins -= pins;
     }
 
-    public void refreshScoreType() {
+    public void updateScoreType() {
         if (firstRoll.getRollScore() == 10) {
             scoreType = "strike";
         } else if (frameScore == 10) {
@@ -50,6 +52,9 @@ public class Frame {
 
     public int getPins() {
         return pins;
+    }
+    public void setPins(int pins) {
+        this.pins = pins;
     }
 
 }
