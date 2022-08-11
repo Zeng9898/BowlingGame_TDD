@@ -148,7 +148,7 @@ class BowlingGameTest {
                 bowlingGame.getFrames()[whichFrame - 1].updatePins(pins2);
                 bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
                 bowlingGame.updateGame();
-                assertEquals(true, bowlingGame.isGameOver());
+                assertTrue(bowlingGame.isGameOver());
             }
             bowlingGame.setWhichFrame(whichFrame);
             bowlingGame.setWhichRoll("first");
@@ -190,38 +190,87 @@ class BowlingGameTest {
             bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.SECOND).setRollScore(0);
         }
     }
+
     @Test
-    void givenTenthFrameFirstRollStrikeAndSecondRollStrike_whenCallUpdateGame_thenShouldBeFrameTenAndRollExtraAndTenPins() {
+    void givenTenthFrameFirstRollStrikeAndSecondRollGet10Score_whenCallUpdateGame_thenShouldBeFrameTenAndRollExtraAndTenPins() {
         //given
         final int whichFrame = 10;
+        final int strike = 10;
         BowlingGame bowlingGame = new BowlingGame();
         bowlingGame.start();
-        for (int pins1 = 0; pins1 < 10; pins1++) {
-            bowlingGame.setWhichFrame(whichFrame);
-            bowlingGame.setWhichRoll("first");
-            //System.out.printf("frame:%d, roll:%s%n", bowlingGame.getWhichFrame(), bowlingGame.getWhichRoll());
-            bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.FIRST).setRollScore(pins1);
-            bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
-            bowlingGame.getFrames()[whichFrame - 1].updatePins(pins1);
-            bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
-            bowlingGame.updateGame();
+        bowlingGame.setWhichFrame(whichFrame);
+        bowlingGame.setWhichRoll("first");
+        //System.out.printf("frame:%d, roll:%s%n", bowlingGame.getWhichFrame(), bowlingGame.getWhichRoll());
+        bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
+        bowlingGame.getFrames()[whichFrame - 1].updatePins(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
+        bowlingGame.updateGame();
 
-            bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.SECOND).setRollScore(10 - pins1);
+        bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.SECOND).setRollScore(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
+        bowlingGame.getFrames()[whichFrame - 1].updatePins(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
+        //when
+        bowlingGame.updateGame();
+        //then
+        assertEquals(10, bowlingGame.getWhichFrame());
+        assertEquals("extra", bowlingGame.getWhichRoll());
+        assertEquals(10, bowlingGame.getFrames()[whichFrame - 1].getPins());
+    }
+
+    @Test
+    void givenTenthFrameFirstRollStrikeAndSecondRollLessThan10Score_whenCallUpdateGame_thenShouldBeFrameTenAndRollExtraAndTLeftPins() {
+        //given
+        final int whichFrame = 10;
+        final int strike = 10;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.setWhichFrame(whichFrame);
+        bowlingGame.setWhichRoll("first");
+        //System.out.printf("frame:%d, roll:%s%n", bowlingGame.getWhichFrame(), bowlingGame.getWhichRoll());
+        bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
+        bowlingGame.getFrames()[whichFrame - 1].updatePins(strike);
+        bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
+        bowlingGame.updateGame();
+        for (int pins2 = 0; pins2 < 10; pins2++) {
+            bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.SECOND).setRollScore(pins2);
             bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
-            bowlingGame.getFrames()[whichFrame - 1].updatePins(10 - pins1);
+            bowlingGame.getFrames()[whichFrame - 1].updatePins(pins2);
             bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
             //when
             bowlingGame.updateGame();
             //then
             assertEquals(10, bowlingGame.getWhichFrame());
             assertEquals("extra", bowlingGame.getWhichRoll());
-            assertEquals(10, bowlingGame.getFrames()[whichFrame - 1].getPins());
+            assertEquals(10 - pins2, bowlingGame.getFrames()[whichFrame - 1].getPins());
 
-            bowlingGame.setWhichFrame(whichFrame);
-            bowlingGame.setWhichRoll("first");
-            bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.FIRST).setRollScore(0);
+            bowlingGame.setWhichRoll("second");
             bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.SECOND).setRollScore(0);
+            bowlingGame.getFrames()[whichFrame - 1].setPins(10);
         }
     }
 
+    @Test
+    void givenTenthFrameExtraRoll_whenCallUpdateGame_thenShouldBeFrameTenAndRollExtraAndTLeftPins() {
+        //given
+        final int whichFrame = 10;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.setWhichFrame(whichFrame);
+        bowlingGame.setWhichRoll("extra");
+        for (int pins3 = 0; pins3 <= 10; pins3++) {
+            bowlingGame.getFrames()[whichFrame - 1].getRoll(RollType.EXTRA).setRollScore(pins3);
+            bowlingGame.getFrames()[whichFrame - 1].updateFrameScore();
+            bowlingGame.getFrames()[whichFrame - 1].updatePins(pins3);
+            bowlingGame.getFrames()[whichFrame - 1].updateScoreType();
+            //when
+            bowlingGame.updateGame();
+            //then
+            assertTrue(bowlingGame.isGameOver());
+        }
+    }
+//    @Test
+//    void givenBowlingGameInSecondFrame_
 }

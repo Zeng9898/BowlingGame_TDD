@@ -30,23 +30,30 @@ public class BowlingGame {
     }
 
     public void updateGame() {
-        if (whichFrame < 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+        if (whichFrame < 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("normal")) {
             whichRoll = "second";
-        } else if (whichFrame < 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("strike")) {
+        } else if (whichFrame < 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("strike")) {
             whichFrame++;
-        } else if (whichFrame < 10 && whichRoll == "second") {
+        } else if (whichFrame < 10 && whichRoll.equals("second")) {
             whichFrame++;
             whichRoll = "first";
-        } else if (whichFrame == 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+        } else if (whichFrame == 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("normal")) {
             whichRoll = "second";
-        } else if (whichFrame == 10 && whichRoll == "first" && frames[whichFrame - 1].getScoreType().equals("strike")) {
+        } else if (whichFrame == 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("strike")) {
             whichRoll = "second";
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll == "second" && frames[whichFrame - 1].getScoreType().equals("normal")) {
+        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getScoreType().equals("normal")) {
             isGameOver = true;
-        } else if (whichFrame == 10 && whichRoll == "second" && frames[whichFrame - 1].getScoreType().equals("spare")) {
+        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getScoreType().equals("spare")) {
             whichRoll = "extra";
             frames[whichFrame - 1].setPins(10);
+        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getFrameScore() == 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = "extra";
+            frames[whichFrame - 1].setPins(10);
+        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getFrameScore() < 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = "extra";
+        } else if (whichFrame == 10 && whichRoll.equals("extra")) {
+            isGameOver = true;
         }
 
 //        if (whichFrame < 10 && whichRoll == "first") {

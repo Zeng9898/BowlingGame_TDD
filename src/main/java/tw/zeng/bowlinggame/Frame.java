@@ -5,10 +5,12 @@ import javax.lang.model.type.NullType;
 public class Frame {
 
     protected int frameScore;
+    protected int bonus;
     protected String scoreType;
     protected int pins = 10;
     protected Roll firstRoll = new Roll(RollType.FIRST);
     protected Roll secondRoll = new Roll(RollType.SECOND);
+
 
     public Roll getRoll(RollType type) {
         if (type == RollType.FIRST) {
@@ -21,7 +23,13 @@ public class Frame {
     }
 
     public void updateFrameScore() {
-        frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
+        if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1) {
+            frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
+        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1){
+            frameScore = firstRoll.getRollScore();
+        } else {
+            frameScore = 0;
+        }
     }
 
     public void updatePins(int pins) {
@@ -53,6 +61,7 @@ public class Frame {
     public int getPins() {
         return pins;
     }
+
     public void setPins(int pins) {
         this.pins = pins;
     }

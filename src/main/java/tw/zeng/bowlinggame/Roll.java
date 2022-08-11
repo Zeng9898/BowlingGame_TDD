@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Roll {
 
-    private int rollScore = 0;
+    private int rollScore = -1;
     private int rollType;
 
     Roll(RollType type) {
