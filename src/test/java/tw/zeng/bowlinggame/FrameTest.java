@@ -10,32 +10,32 @@ class FrameTest {
         //given
         var frame = new Frame();
         //when
-        Roll firstRoll = frame.getRoll("first");
-        Roll secondRoll = frame.getRoll("second");
+        Roll firstRoll = frame.getRoll(RollType.FIRST);
+        Roll secondRoll = frame.getRoll(RollType.SECOND);
         //then
-        assertEquals("first", firstRoll.getWhichRoll());
-        assertEquals("second", secondRoll.getWhichRoll());
+        assertEquals(1, firstRoll.getRollType());
+        assertEquals(2, secondRoll.getRollType());
     }
 
-    @Test
-    void givenAFrame_whenCallGetRollWithWrongArgument_thenShouldThrowIllegalArgumentException() {
-        //given
-        var frame = new Frame();
-        //when then
-        assertThrows(IllegalArgumentException.class, () -> {
-            Roll firstRoll = frame.getRoll("whatever");
-        });
-    }
+//    @Test
+//    void givenAFrame_whenCallGetRollWithWrongArgument_thenShouldThrowIllegalArgumentException() {
+//        //given
+//        var frame = new Frame();
+//        //when then
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            Roll firstRoll = frame.getRoll("whatever");
+//        });
+//    }
 
     @Test
     void givenAFrameAfterSecondRoll_whenCallUpdateFrameScoreAndUpdatePins_thenShouldDoTheRightUpdate() {
         //given
         var frame = new Frame();
         for (int pins1 = 0; pins1 <= 9; pins1++) {
-            frame.getRoll("first").setRollScore(pins1);
+            frame.getRoll(RollType.FIRST).setRollScore(pins1);
             frame.updatePins(pins1);
             frame.updateFrameScore();
-            int pins2 = frame.getRoll("second").randomThrow(frame.getPins());
+            int pins2 = frame.getRoll(RollType.SECOND).randomThrow(frame.getPins());
             //when
             frame.updatePins(pins2);
             frame.updateFrameScore();
@@ -54,7 +54,7 @@ class FrameTest {
         //given
         var frame = new Frame();
         for (int pins = 0; pins <= 10; pins++) {
-            frame.getRoll("first").setRollScore(pins);
+            frame.getRoll(RollType.FIRST).setRollScore(pins);
             //when
             frame.updatePins(pins);
             frame.updateFrameScore();
@@ -72,7 +72,7 @@ class FrameTest {
     void givenAFrameWith10ScoreInFirstRoll_whenCallUpdateScoreType_thenTheFrameTypeShouldbeStrike() {
         //given
         Frame frame = new Frame();
-        frame.getRoll("first").setRollScore(10);
+        frame.getRoll(RollType.FIRST).setRollScore(10);
         //when
         frame.updateScoreType();
         //then
@@ -84,8 +84,8 @@ class FrameTest {
         //given
         Frame frame = new Frame();
         for (int first = 0; first < 10; first++) {
-            frame.getRoll("first").setRollScore(first);
-            frame.getRoll("second").setRollScore(10 - first);
+            frame.getRoll(RollType.FIRST).setRollScore(first);
+            frame.getRoll(RollType.SECOND).setRollScore(10 - first);
             frame.updateFrameScore();
             //when
             frame.updateScoreType();
@@ -98,10 +98,10 @@ class FrameTest {
     void givenAFrameWithLessThan10ScoreInTwoRolls_whenCallUpdateScoreType_thenTheScoreTypeShouldbeNormal() {
         //given
         Frame frame = new Frame();
-        frame.getRoll("first").setRollScore(0);
+        frame.getRoll(RollType.FIRST).setRollScore(0);
 
         for (int k = 0; k <= 9; k++) {
-            frame.getRoll("second").setRollScore(k);
+            frame.getRoll(RollType.SECOND).setRollScore(k);
             frame.updateFrameScore();
             //when
             frame.updateScoreType();

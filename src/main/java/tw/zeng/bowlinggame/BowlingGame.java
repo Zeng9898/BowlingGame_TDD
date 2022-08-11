@@ -44,6 +44,9 @@ public class BowlingGame {
             frames[whichFrame - 1].setPins(10);
         } else if (whichFrame == 10 && whichRoll == "second" && frames[whichFrame - 1].getScoreType().equals("normal")) {
             isGameOver = true;
+        } else if (whichFrame == 10 && whichRoll == "second" && frames[whichFrame - 1].getScoreType().equals("spare")) {
+            whichRoll = "extra";
+            frames[whichFrame - 1].setPins(10);
         }
 
 //        if (whichFrame < 10 && whichRoll == "first") {

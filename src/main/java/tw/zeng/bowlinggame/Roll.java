@@ -6,19 +6,15 @@ import java.util.Random;
 public class Roll {
 
     private int rollScore = 0;
-    private final String whichRoll;
+    private int rollType;
 
-    Roll(String whichRoll) {
-        if (whichRoll.equals("first") || whichRoll.equals("second") || whichRoll.equals("extra")) {
-            this.whichRoll = whichRoll;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    Roll(RollType type) {
+        this.rollType = type.getType();
     }
 
-    int randomThrow(int pins) {
+    int randomThrow(int limitNum) {
         Random rand = new Random();
-        this.rollScore = rand.nextInt(pins + 1);
+        this.rollScore = rand.nextInt(limitNum + 1);
         return this.rollScore;
     }
 
@@ -30,7 +26,7 @@ public class Roll {
         this.rollScore = rollScore;
     }
 
-    public String getWhichRoll() {
-        return whichRoll;
+    public int getRollType() {
+        return rollType;
     }
 }

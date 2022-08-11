@@ -7,36 +7,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class RollTest {
 
     @Test
-    void givenAFirstRollWith10Pins_whenDoRandomThrow_thenRollScoreShouldBetween0and10() {
+    void givenARoll_whenDoRandomThrow_thenRollScoreShouldBetween0andLeftPinsCount() {
         //given
-        var roll = new Roll("first");
-        for (int i = 0; i < 1000; i++) {
-            int pins = 10;
-            //when
-            roll.randomThrow(pins);
-            int score = roll.getRollScore();
-            //then
-            assertTrue(score >= 0 && score <= pins);
-        }
-    }
+        Frame frame = new Frame();
+        var firstRoll = new Roll(RollType.SECOND);
+        //when
+        frame.setPins(5);
+        firstRoll.randomThrow(frame.getPins());
+        frame.setPins(10);
+        firstRoll.randomThrow(frame.getPins());
 
-    @Test
-    void givenASecondRollWith10Pins_whenDoRandomThrow_thenRollScoreShouldBetween0and10() {
-        //given
-        var roll = new Roll("second");
-        for (int i = 0; i < 1000; i++) {
-            int pins = 10;
-            //when
-            roll.randomThrow(pins);
-            int score = roll.getRollScore();
-            //then
-            assertTrue(score >= 0 && score <= pins);
-        }
+        int firstScore = firstRoll.getRollScore();
+        int secondScore = firstRoll.getRollScore();
+
+        //then
+        assertTrue(firstScore >= 0 && firstScore <= frame.getPins());
+        assertTrue(secondScore >= 0 && secondScore <= frame.getPins());
     }
-    @Test
-    void givenARollNotFirstSecondExtra_thenShouldThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            var roll = new Roll("whatever");
-        });
-    }
+//
+//    @Test
+//    void givenNewRoll_whenArgumentIsNotFirstOrSecondOrExtra_thenShouldThrowIllegalArgumentException() {
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            var roll = new Roll("whatever");
+//        });
+//    }
+
 }

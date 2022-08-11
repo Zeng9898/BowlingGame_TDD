@@ -5,15 +5,15 @@ import javax.lang.model.type.NullType;
 public class Frame {
 
     protected int frameScore;
-    protected String scoreType = null;
+    protected String scoreType;
     protected int pins = 10;
-    protected Roll firstRoll = new Roll("first");
-    protected Roll secondRoll = new Roll("second");
+    protected Roll firstRoll = new Roll(RollType.FIRST);
+    protected Roll secondRoll = new Roll(RollType.SECOND);
 
-    public Roll getRoll(String whichRoll) {
-        if (whichRoll.equals("first")) {
+    public Roll getRoll(RollType type) {
+        if (type == RollType.FIRST) {
             return firstRoll;
-        } else if (whichRoll.equals("second")) {
+        } else if (type == RollType.SECOND) {
             return secondRoll;
         } else {
             throw new IllegalArgumentException();
