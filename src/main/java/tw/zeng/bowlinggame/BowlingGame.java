@@ -72,6 +72,36 @@ public class BowlingGame {
 //        }
     }
 
+    public void updateBonus() {
+        for (int frame = 0; frame < whichFrame - 1; frame++) {
+            if (frames[frame].getScoreType().equals("strike")
+                    && frames[frame + 1].getRoll(RollType.FIRST).getRollScore() != -1
+                    && frames[frame + 1].getRoll(RollType.SECOND).getRollScore() != -1) {
+
+                int bonus = frames[frame + 1].getRoll(RollType.FIRST).getRollScore() + frames[frame + 1].getRoll(RollType.SECOND).getRollScore();
+                frames[frame].setBonus(bonus);
+            } else if (frames[frame].getScoreType().equals("strike")
+                    && frames[frame + 1].getRoll(RollType.FIRST).getRollScore() != -1
+                    && frames[frame + 1].getRoll(RollType.SECOND).getRollScore() == -1
+                    && frames[frame + 2].getRoll(RollType.FIRST).getRollScore() != -1) {
+
+                int bonus = frames[frame + 1].getRoll(RollType.FIRST).getRollScore() + frames[frame + 2].getRoll(RollType.FIRST).getRollScore();
+                frames[frame].setBonus(bonus);
+
+            } else if (frames[frame].getScoreType().equals("strike")
+                    && frames[frame + 1].getRoll(RollType.FIRST).getRollScore() != -1
+                    && frames[frame + 1].getRoll(RollType.SECOND).getRollScore() == -1) {
+
+                int bonus = frames[frame + 1].getRoll(RollType.FIRST).getRollScore();
+                frames[frame].setBonus(bonus);
+
+            } else if (frames[frame].getScoreType().equals("spare") && frames[frame + 1].getRoll(RollType.FIRST).getRollScore() != -1) {
+                int bonus = frames[frame + 1].getRoll(RollType.FIRST).getRollScore();
+                frames[frame].setBonus(bonus);
+            }
+        }
+    }
+
     public boolean isGameOver() {
         return isGameOver;
     }

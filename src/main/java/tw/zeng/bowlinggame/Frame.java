@@ -25,7 +25,7 @@ public class Frame {
     public void updateFrameScore() {
         if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1) {
             frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
-        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1){
+        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1) {
             frameScore = firstRoll.getRollScore();
         } else {
             frameScore = 0;
@@ -46,9 +46,6 @@ public class Frame {
         }
     }
 
-    public void updateBonus() {
-
-    }
 
     public String getScoreType() {
         return scoreType;
@@ -66,4 +63,11 @@ public class Frame {
         this.pins = pins;
     }
 
+    public int getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
+    }
 }

@@ -271,6 +271,112 @@ class BowlingGameTest {
             assertTrue(bowlingGame.isGameOver());
         }
     }
-//    @Test
-//    void givenBowlingGameInSecondFrame_
+
+    @Test
+    void givenBowlingGameInSecondFrameFirstRollAndFirstFrameStrike_whenCallUpdateBonus_thenFirstFrameBonusShouldUpdate() {
+        //given
+        final int strike = 10;
+        final int dummyNum = 5;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.getFrames()[0].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[0].updateFrameScore();
+        bowlingGame.getFrames()[0].updatePins(strike);
+        bowlingGame.getFrames()[0].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[1].getRoll(RollType.FIRST).setRollScore(dummyNum);
+        bowlingGame.getFrames()[1].updateFrameScore();
+        bowlingGame.getFrames()[1].updatePins(dummyNum);
+        bowlingGame.getFrames()[1].updateScoreType();
+        //when
+        bowlingGame.updateBonus();
+        //then
+        assertEquals(dummyNum, bowlingGame.getFrames()[0].getBonus());
+    }
+
+    @Test
+    void givenBowlingGameInSecondFrameSecondRollAndFirstFrameStrike_whenCallUpdateBonus_thenFirstFrameBonusShouldUpdateCorrectly() {
+        //given
+        final int strike = 10;
+        final int dummyNum = 3;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.getFrames()[0].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[0].updateFrameScore();
+        bowlingGame.getFrames()[0].updatePins(strike);
+        bowlingGame.getFrames()[0].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[1].getRoll(RollType.FIRST).setRollScore(dummyNum);
+        bowlingGame.getFrames()[1].updateFrameScore();
+        bowlingGame.getFrames()[1].updatePins(dummyNum);
+        bowlingGame.getFrames()[1].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[1].getRoll(RollType.SECOND).setRollScore(dummyNum);
+        bowlingGame.getFrames()[1].updateFrameScore();
+        bowlingGame.getFrames()[1].updatePins(dummyNum);
+        bowlingGame.getFrames()[1].updateScoreType();
+        bowlingGame.updateGame();
+        //when
+        bowlingGame.updateBonus();
+        //then
+        assertEquals(dummyNum + dummyNum, bowlingGame.getFrames()[0].getBonus());
+    }
+
+    @Test
+    void givenBowlingGameInThirdFrameFirstRollAndFirstFrameStrikeSecondFrameStrike_whenCallUpdateBonus_thenFirstFrameBonusShouldUpdateCorrectly() {
+        //given
+        final int strike = 10;
+        final int dummyNum = 3;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.getFrames()[0].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[0].updateFrameScore();
+        bowlingGame.getFrames()[0].updatePins(strike);
+        bowlingGame.getFrames()[0].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[1].getRoll(RollType.FIRST).setRollScore(strike);
+        bowlingGame.getFrames()[1].updateFrameScore();
+        bowlingGame.getFrames()[1].updatePins(strike);
+        bowlingGame.getFrames()[1].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[2].getRoll(RollType.FIRST).setRollScore(dummyNum);
+        bowlingGame.getFrames()[2].updateFrameScore();
+        bowlingGame.getFrames()[2].updatePins(dummyNum);
+        bowlingGame.getFrames()[2].updateScoreType();
+        bowlingGame.updateGame();
+
+        //when
+        bowlingGame.updateBonus();
+        //then
+        assertEquals(strike + dummyNum, bowlingGame.getFrames()[0].getBonus());
+    }
+
+    @Test
+    void givenBowlingGameInSecondFrameFirstRollAndFirstFrameSpare_whenCallUpdateBonus_thenFirstFrameBonusShouldUpdateCorrectly() {
+        //given
+        final int dummyNum = 3;
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.start();
+        bowlingGame.getFrames()[0].getRoll(RollType.FIRST).setRollScore(dummyNum);
+        bowlingGame.getFrames()[0].updateFrameScore();
+        bowlingGame.getFrames()[0].updatePins(dummyNum);
+        bowlingGame.getFrames()[0].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[0].getRoll(RollType.SECOND).setRollScore(10 - dummyNum);
+        bowlingGame.getFrames()[0].updateFrameScore();
+        bowlingGame.getFrames()[0].updatePins(10 - dummyNum);
+        bowlingGame.getFrames()[0].updateScoreType();
+        bowlingGame.updateGame();
+        bowlingGame.getFrames()[1].getRoll(RollType.FIRST).setRollScore(dummyNum);
+        bowlingGame.getFrames()[1].updateFrameScore();
+        bowlingGame.getFrames()[1].updatePins(dummyNum);
+        bowlingGame.getFrames()[1].updateScoreType();
+        bowlingGame.updateGame();
+
+        //when
+        bowlingGame.updateBonus();
+        //then
+        assertEquals(dummyNum, bowlingGame.getFrames()[0].getBonus());
+    }
+
 }
