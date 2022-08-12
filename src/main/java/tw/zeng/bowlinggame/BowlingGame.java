@@ -3,7 +3,7 @@ package tw.zeng.bowlinggame;
 public class BowlingGame {
     private Frame[] frames;
     private int whichFrame;
-    private String whichRoll;
+    private RollType whichRoll;
     private boolean isGameOver = false;
     public static final int FRAME_SIZE = 10;
 
@@ -21,7 +21,7 @@ public class BowlingGame {
 
     public void start() {
         whichFrame = 1;
-        whichRoll = "first";
+        whichRoll = RollType.FIRST;
         frames = new Frame[FRAME_SIZE];
         for (int i = 0; i < 9; i++) {
             frames[i] = new Frame();
@@ -30,29 +30,29 @@ public class BowlingGame {
     }
 
     public void updateGame() {
-        if (whichFrame < 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("normal")) {
-            whichRoll = "second";
-        } else if (whichFrame < 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("strike")) {
+        if (whichFrame < 10 && whichRoll == RollType.FIRST && frames[whichFrame - 1].getScoreType().equals("normal")) {
+            whichRoll = RollType.SECOND;
+        } else if (whichFrame < 10 && whichRoll == RollType.FIRST && frames[whichFrame - 1].getScoreType().equals("strike")) {
             whichFrame++;
-        } else if (whichFrame < 10 && whichRoll.equals("second")) {
+        } else if (whichFrame < 10 && whichRoll == RollType.SECOND) {
             whichFrame++;
-            whichRoll = "first";
-        } else if (whichFrame == 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("normal")) {
-            whichRoll = "second";
-        } else if (whichFrame == 10 && whichRoll.equals("first") && frames[whichFrame - 1].getScoreType().equals("strike")) {
-            whichRoll = "second";
+            whichRoll = RollType.FIRST;
+        } else if (whichFrame == 10 && whichRoll == RollType.FIRST && frames[whichFrame - 1].getScoreType().equals("normal")) {
+            whichRoll = RollType.SECOND;
+        } else if (whichFrame == 10 && whichRoll == RollType.FIRST && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = RollType.SECOND;
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getScoreType().equals("normal")) {
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getScoreType().equals("normal")) {
             isGameOver = true;
-        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getScoreType().equals("spare")) {
-            whichRoll = "extra";
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getScoreType().equals("spare")) {
+            whichRoll = RollType.EXTRA;
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getFrameScore() == 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
-            whichRoll = "extra";
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getFrameScore() == 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = RollType.EXTRA;
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll.equals("second") && frames[whichFrame - 1].getFrameScore() < 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
-            whichRoll = "extra";
-        } else if (whichFrame == 10 && whichRoll.equals("extra")) {
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getFrameScore() < 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+            whichRoll = RollType.EXTRA;
+        } else if (whichFrame == 10 && whichRoll == RollType.EXTRA) {
             isGameOver = true;
         }
 
@@ -114,11 +114,11 @@ public class BowlingGame {
         this.whichFrame = whichFrame;
     }
 
-    public String getWhichRoll() {
+    public RollType getWhichRoll() {
         return whichRoll;
     }
 
-    public void setWhichRoll(String whichRoll) {
+    public void setWhichRoll(RollType whichRoll) {
         this.whichRoll = whichRoll;
     }
 
