@@ -1,13 +1,12 @@
 package tw.zeng.bowlinggame;
 
-import javax.lang.model.type.NullType;
-
 public class Frame {
 
-    protected int frameScore;
+    protected int score;
     protected int bonus;
-    protected String scoreType;
+    protected ScoreType scoreType;
     protected int pins = 10;
+    public static final int MAX_PINS = 10;
     protected Roll firstRoll = new Roll(RollType.FIRST);
     protected Roll secondRoll = new Roll(RollType.SECOND);
 
@@ -15,44 +14,51 @@ public class Frame {
     public Roll getRoll(RollType type) {
         if (type == RollType.FIRST) {
             return firstRoll;
-        } else if (type == RollType.SECOND) {
-            return secondRoll;
         } else {
-            throw new IllegalArgumentException();
+            return secondRoll;
         }
     }
 
-    public void updateFrameScore() {
-        if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1) {
-            frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
-        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1) {
-            frameScore = firstRoll.getRollScore();
-        } else {
-            frameScore = 0;
-        }
+    public void updateFrameScore(int pins) {
+//        if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1) {
+//            frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
+//        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1) {
+//            frameScore = firstRoll.getRollScore();
+//        } else {
+//            frameScore = 0;
+//        }
+
+        this.score += pins;
     }
 
     public void updatePins(int pins) {
         this.pins -= pins;
     }
 
-    public void updateScoreType() {
-        if (firstRoll.getRollScore() == 10) {
-            scoreType = "strike";
-        } else if (firstRoll.getRollScore() + secondRoll.getRollScore() == 10) {
-            scoreType = "spare";
+    public void updateScoreTypeByRollType(RollType rollType) {
+        if (rollType == RollType.FIRST && this.getScore() == MAX_PINS) {
+            scoreType = ScoreType.STRIKE;
+        } else if (this.getScore() == MAX_PINS) {
+            scoreType = ScoreType.SPARE;
         } else {
-            scoreType = "normal";
+            scoreType = ScoreType.NORMAL;
         }
+//        if (firstRoll.getRollScore() == MAX_PINS) {
+//            scoreType = ScoreType.STRIKE.getType();
+//        } else if (this.getScore() == MAX_PINS) {
+//            scoreType = ScoreType.SPARE.getType();
+//        } else {
+//            scoreType = ScoreType.NORMAL.getType();
+//        }
     }
 
 
-    public String getScoreType() {
+    public ScoreType getScoreType() {
         return scoreType;
     }
 
-    public int getFrameScore() {
-        return frameScore;
+    public int getScore() {
+        return score;
     }
 
     public int getPins() {

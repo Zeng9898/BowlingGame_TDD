@@ -35,13 +35,13 @@ class TenthFrameTest {
             for (int pins2 = 0; pins2 <= 10 - pins1 - 1; pins2++) {
                 frame.getRoll(RollType.FIRST).setRollScore(pins1);
                 frame.updatePins(pins1);
-                frame.updateFrameScore();
+                frame.updateFrameScore(pins1);
                 frame.getRoll(RollType.SECOND).setRollScore(pins2);
                 //when
                 frame.updatePins(pins2);
-                frame.updateFrameScore();
+                frame.updateFrameScore(pins2);
                 //then
-                assertEquals(pins1 + pins2, frame.getFrameScore());
+                assertEquals(pins1 + pins2, frame.getScore());
                 assertEquals(10 - (pins1 + pins2), frame.getPins());
 //                System.out.printf("第一投分數：%d 第二投分數：%d %n", pins1, pins2);
 //                System.out.printf("得分：%d %n", frame.getFrameScore());
@@ -57,51 +57,51 @@ class TenthFrameTest {
         Frame frame = new TenthFrame();
         final int strike = 10;
         frame.getRoll(RollType.FIRST).setRollScore(strike);
-        frame.updateFrameScore();
+        frame.updateFrameScore(strike);
         frame.updatePins(strike);
         frame.setPins(strike);
         for (int pins2 = 0; pins2 < 10; pins2++) {
             for (int pins3 = 0; pins3 <= 10 - pins2; pins3++) {
                 frame.getRoll(RollType.SECOND).setRollScore(pins2);
                 //when
-                frame.updateFrameScore();
+                frame.updateFrameScore(pins2);
                 frame.updatePins(pins2);
                 frame.getRoll(RollType.EXTRA).setRollScore(pins3);
-                frame.updateFrameScore();
+                frame.updateFrameScore(pins3);
                 frame.updatePins(pins3);
                 //then
-                assertEquals(strike + pins2 + pins3, frame.getFrameScore());
+                assertEquals(strike + pins2 + pins3, frame.getScore());
                 assertEquals(10 - (pins2 + pins3), frame.getPins());
                 frame.setPins(10);
             }
         }
     }
 
-    @Test
-    void givenTenthFrameSpare_whenCallUpdateFrameScoreWithUpdatePins_thenShouldDoTheRightUpdate() {
-        //given
-        Frame frame = new TenthFrame();
-        for (int pins1 = 0; pins1 < 10; pins1++) {
-            frame.getRoll(RollType.FIRST).setRollScore(pins1);
-            frame.updateFrameScore();
-            frame.updatePins(pins1);
-            frame.getRoll(RollType.SECOND).setRollScore(10 - pins1);
-            frame.updateScoreType();
-            frame.updatePins(10 - pins1);
-            //System.out.printf("---pins1：%d%n", pins1);
-            //System.out.printf("---pins2：%d%n", frame.getRoll("second").getRollScore());
-            for (int pins3 = 0; pins3 <= 10; pins3++) {
-                //System.out.printf("pins3：%d%n", pins3);
-                frame.setPins(10);
-                frame.getRoll(RollType.EXTRA).setRollScore(pins3);
-                //when
-                frame.updateFrameScore();
-                frame.updatePins(pins3);
-                //then
-                assertEquals(10 + pins3, frame.getFrameScore());
-                assertEquals(10 - pins3, frame.getPins());
-            }
-            frame.updatePins(10);
-        }
-    }
+//    @Test
+//    void givenTenthFrameSpare_whenCallUpdateFrameScoreWithUpdatePins_thenShouldDoTheRightUpdate() {
+//        //given
+//        Frame frame = new TenthFrame();
+//        for (int pins1 = 0; pins1 < 10; pins1++) {
+//            frame.getRoll(RollType.FIRST).setRollScore(pins1);
+//            frame.updateFrameScore(pins1);
+//            frame.updatePins(pins1);
+//            frame.getRoll(RollType.SECOND).setRollScore(10 - pins1);
+//            frame.updateScoreTypeByRollType(RollType.SECOND);
+//            frame.updatePins(10 - pins1);
+//            //System.out.printf("---pins1：%d%n", pins1);
+//            //System.out.printf("---pins2：%d%n", frame.getRoll("second").getRollScore());
+//            for (int pins3 = 0; pins3 <= 10; pins3++) {
+//                //System.out.printf("pins3：%d%n", pins3);
+//                frame.setPins(10);
+//                frame.getRoll(RollType.EXTRA).setRollScore(pins3);
+//                //when
+//                frame.updateScoreTypeByRollType(RollType.EXTRA);
+//                frame.updatePins(pins3);
+//                //then
+//                assertEquals(10 + pins3, frame.getScore());
+//                assertEquals(10 - pins3, frame.getPins());
+//            }
+//            frame.updatePins(10);
+//        }
+//    }
 }

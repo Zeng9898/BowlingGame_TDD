@@ -7,8 +7,7 @@ public class BowlingGame {
     private boolean isGameOver = false;
     public static final int FRAME_SIZE = 10;
 
-
-//    public BowlingGame () {
+    //    public BowlingGame () {
 //        frames = new Frame[FRAME_SIZE];
 //    }
 //    private void startGame() {
@@ -17,14 +16,13 @@ public class BowlingGame {
 //            f.....
 //        }
 //    }
-
-
     public void start() {
         whichFrame = 1;
         whichRoll = RollType.FIRST;
         frames = new Frame[FRAME_SIZE];
         for (int i = 0; i < 9; i++) {
             frames[i] = new Frame();
+            //whichFrame = i;
         }
         frames[9] = new TenthFrame();
     }
@@ -47,29 +45,14 @@ public class BowlingGame {
         } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getScoreType().equals("spare")) {
             whichRoll = RollType.EXTRA;
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getFrameScore() == 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getScore() == 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
             whichRoll = RollType.EXTRA;
             frames[whichFrame - 1].setPins(10);
-        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getFrameScore() < 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
+        } else if (whichFrame == 10 && whichRoll == RollType.SECOND && frames[whichFrame - 1].getScore() < 20 && frames[whichFrame - 1].getScoreType().equals("strike")) {
             whichRoll = RollType.EXTRA;
         } else if (whichFrame == 10 && whichRoll == RollType.EXTRA) {
             isGameOver = true;
         }
-
-//        if (whichFrame < 10 && whichRoll == "first") {
-//            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
-//                whichRoll = "second";
-//            } else if (frames[whichFrame - 1].getScoreType().equals("strike")) {
-//                whichFrame++;
-//            }
-//        } else if (whichFrame < 10 && whichRoll == "second") {
-//            whichFrame++;
-//            whichRoll = "first";
-//        } else if (whichFrame == 10 && whichRoll == "first") {
-//            if (frames[whichFrame - 1].getScoreType().equals("normal")) {
-//                whichRoll = "second";
-//            }
-//        }
     }
 
     public void updateBonus() {
@@ -80,7 +63,7 @@ public class BowlingGame {
 
                 int bonus = frames[frame + 1].getRoll(RollType.FIRST).getRollScore() + frames[frame + 1].getRoll(RollType.SECOND).getRollScore();
                 frames[frame].setBonus(bonus);
-            } else if (frames[frame].getScoreType().equals("strike")
+            } else if (frame != 8 && frames[frame].getScoreType().equals("strike")
                     && frames[frame + 1].getRoll(RollType.FIRST).getRollScore() != -1
                     && frames[frame + 1].getRoll(RollType.SECOND).getRollScore() == -1
                     && frames[frame + 2].getRoll(RollType.FIRST).getRollScore() != -1) {
@@ -100,6 +83,16 @@ public class BowlingGame {
                 frames[frame].setBonus(bonus);
             }
         }
+    }
+
+    public int score() {
+        int score = 0;
+        for (int frame = 0; frame < whichFrame; frame++) {
+            score += frames[frame].getScore();
+            score += frames[frame].getBonus();
+
+        }
+        return score;
     }
 
     public boolean isGameOver() {
@@ -124,5 +117,13 @@ public class BowlingGame {
 
     public Frame[] getFrames() {
         return frames;
+    }
+
+    public void printStatus() {
+        for (int frame = 0; frame < 10; frame++) {
+            System.out.printf("Frame %d\n", frame + 1);
+            System.out.printf("Roll1", frames[frame].getRoll(RollType.FIRST).getRollScore());
+
+        }
     }
 }

@@ -6,10 +6,10 @@ import java.util.Random;
 public class Roll {
 
     private int rollScore = -1;
-    private int rollType;
+    private RollType rollType;
 
     Roll(RollType type) {
-        this.rollType = type.getType();
+        this.rollType = type;
     }
 
     int randomThrow(int limitNum) {
@@ -26,7 +26,7 @@ public class Roll {
         this.rollScore = rollScore;
     }
 
-    public int getRollType() {
+    public RollType getRollType() {
         return rollType;
     }
 }

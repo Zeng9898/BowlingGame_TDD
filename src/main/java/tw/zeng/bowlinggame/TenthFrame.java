@@ -17,15 +17,7 @@ public class TenthFrame extends Frame {
     }
 
     @Override
-    public void updateFrameScore() {
-        if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1 && extraRoll.getRollScore() != -1) {
-            frameScore = firstRoll.getRollScore() + secondRoll.getRollScore() + extraRoll.getRollScore();
-        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() != -1 && extraRoll.getRollScore() == -1){
-            frameScore = firstRoll.getRollScore() + secondRoll.getRollScore();
-        } else if (firstRoll.getRollScore() != -1 && secondRoll.getRollScore() == -1 && extraRoll.getRollScore() == -1){
-            frameScore = firstRoll.getRollScore();
-        } else {
-            frameScore = 0;
-        }
+    public void updateFrameScore(int pins) {
+        score += pins;
     }
 }
