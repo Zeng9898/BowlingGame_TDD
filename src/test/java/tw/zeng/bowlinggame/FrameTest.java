@@ -74,7 +74,7 @@ class FrameTest {
 //    }
 
     @Test
-    void givenAFrameWithFirstRoll_whenRollKnockDownAllPins_thenTheFrameTypeShouldBeStrike() {
+    void givenAFrame_whenFirstRollKnockDownAllPins_thenTheFrameTypeShouldBeStrike() {
         //givenAFrameWithFirstRoll_whenRollKnockDownAllPins_thenTheFrameTypeShouldBeStrike()
         //given場景when發生事件then什麼結果
         //givenAFrameWith10ScoreInFirstRoll_whenCallUpdateScoreType_thenTheFrameTypeShouldbeStrike()
