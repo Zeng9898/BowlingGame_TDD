@@ -53,7 +53,7 @@ class FrameTest {
 //            System.out.printf("剩餘瓶數：%d %n", frame.getPins());
     }
 
-    //與上面的測試同意
+    //與上面的測試同義
 //    @Test
 //    void givenAFrameAfterFirstRoll_whenCallUpdateFrameScoreAndUpdatePins_thenShouldDoTheRightUpdate() {
 //        //given
